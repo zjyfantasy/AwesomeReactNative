@@ -1,31 +1,25 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import { Reducer, Router, Stack, Scene } from 'react-native-router-flux'
+import { Reducer, Router, Stack, Scene, Actions } from 'react-native-router-flux'
 import Home from './containers/Home';
+import App from './containers/App';
+
 import reducer from './reducers';
+import configureStore from './store/configureStore';
 
-const reducerCreate = params => {
-    const defaultReducer = new Reducer(params);
-    return (state, action) => {
-        console.log('ACTION:', action);
-        return defaultReducer(state, action);
-    };
-};
-
-
-const finalCreateStore = applyMiddleware(thunk)(createStore);
-let store = finalCreateStore(reducer);
+const store = configureStore();
+const RouterWithRedux = connect()(Router);
+const scenes = Actions.create(
+    <Stack key="root">
+        <Scene key="home" component={Home} title="Home" />
+        <Scene key="counter" component={App} title="counter" />
+    </Stack>
+);
 const Index = () => (
     <Provider store={store}>
-        <Router
-            createReducer={reducerCreate}
-        >
-            <Stack key="root" titleStyle={{ alignSelf: 'center' }}>
-                <Scene key="home" component={Home} title="Home" />
-            </Stack>
-        </Router>
+        <RouterWithRedux scenes={scenes} />
     </Provider>
 )
 

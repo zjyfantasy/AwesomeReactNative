@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
-import homeReducer from './homeReducer';
+import counter from './counter';
+import routes from './routes';
 
-export default combineReducers({
-    home: homeReducer,
+const rootReducer = combineReducers({
+  routes,  
+  counter,
 });
+
+export default rootReducer;

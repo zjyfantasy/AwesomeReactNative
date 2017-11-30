@@ -11,6 +11,8 @@ import {
   Text,
   View
 } from 'react-native';
+import { Button } from 'react-native-elements'
+import { Actions } from 'react-native-router-flux'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -32,6 +34,11 @@ export default class Home extends Component {
         <Text style={styles.instructions}>
           {instructions}
         </Text>
+        <Button
+          raised
+          onPress={()=>Actions.counter()}
+          icon={{ name: 'cached' }}
+          title='BUTTON WITH ICON' />
       </View>
     );
   }
